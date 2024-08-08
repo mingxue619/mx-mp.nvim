@@ -5,16 +5,37 @@ import { Socket } from "net";
 import { createConnection } from "node:net";
 
 import fs from "fs";
+const filePath = "/home/ad/github/mingxue619/mx-md.nvim/log"
+
+const servername = process.argv[2];
 
 
 // Find `nvim` on the system and open a channel to it.
 (async function () {
-    let socket = "/run/user/1000/nvim.2234070.0";
+    fs.writeFileSync(filePath, "l1");
+    // let servername = "/run/user/1000/nvim.2234070.0";
+
     const nvim = attach({
-        socket: socket,
+        socket: servername,
     });
-    nvim.command("vsp");
-    // fs.writeFileSync(filePath, "l6");
+    // nvim.command("vsp");
     const windows = await nvim.windows;
     console.log(windows.length);
+    nvim.on("request", (method, args, resp) => {
+        // console.log(method);
+        fs.writeFileSync(filePath, method);
+        // if (method === 'send_message') {
+        // }
+        resp.send();
+    });
+    nvim.on("notification", (method, args, resp) => {
+        // console.log(method);
+        fs.writeFileSync(filePath, method);
+        // if (method === 'send_message') {
+        // }
+        resp.send();
+    });
+    let channelId = await nvim.channelId;
+    await nvim.setVar('mxmd_node_channel_id', channelId)
+
 })();
