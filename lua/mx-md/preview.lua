@@ -21,12 +21,17 @@ local M = {}
 -- 	vim.fn.chansend(job_id, message)
 -- end
 function M.preview()
+    -- 获取 v:servername 的值
+    print('hello')
+    local servername = vim.v.servername
+    print('Server Name: '..tostring(servername))
+
 	local pid = vim.fn.getpid()
 	local script_path = debug.getinfo(1, "S").source:sub(2)
 	-- local script_path = vim.fn.expand("<sfile>:p")
 	local project_dir = script_path:match("(.*/).-/"):match("(.*/).-/")
-	local cmd = "ALLOW_CONSOLE=1 node " .. project_dir .. "server.mjs " .. pid .. " > /tmp/nlog.txt"
-	-- print("cmd: " .. cmd)
+	local cmd = "ALLOW_CONSOLE=1 node " .. project_dir .. "server.mjs " .. servername .. " > /tmp/nlog.txt"
+	print("cmd: " .. cmd)
 	-- local job_id = vim.fn.jobstart({ "node", project_dir .. "server.mjs", ">> /tmp/nlog.txt" }, {
 	local job_id = vim.fn.jobstart(cmd, {
 		rpc = true,
