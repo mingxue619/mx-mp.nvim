@@ -1,5 +1,4 @@
 import { attach, findNvim } from "neovim";
-import * as child_process from "node:child_process";
 import http from "http";
 import fs from "fs";
 
