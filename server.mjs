@@ -1,6 +1,7 @@
 import { attach, findNvim } from "neovim";
 import * as child_process from "node:child_process";
 import http from "http";
+import fs from "fs";
 
 const PORT = 8000;
 
@@ -10,9 +11,35 @@ const server = http.createServer((req, res) => {
     res.end("Hello, world!\n");
 });
 
-const nvim_pid = process.argv[2];
+const filePath = "/home/ad/github/mingxue619/mx-md.nvim/log"
+const servername = process.argv[2];
+(async function () {
+    const nvim = attach({
+        socket: servername,
+    });
+    nvim.command("vsp");
+    const windows = await nvim.windows;
+    console.log(windows.length);
+    nvim.on("request", (method, args, resp) => {
+        // console.log(method);
+        fs.writeFileSync(filePath, "request\n")
+        fs.appendFileSync(filePath, method);
+        // if (method === 'send_message') {
+        // }
+        resp.send();
+    });
+    nvim.on("notification", (method, args, resp) => {
+        // console.log(method);
+        fs.writeFileSync(filePath, "notification\n")
+        fs.appendFileSync(filePath, method);
+        // if (method === 'send_message') {
+        // }
+        resp.send();
+    });
+    let channelId = await nvim.channelId;
+    await nvim.setVar("mxmd_node_channel_id", channelId);
+})();
 server.listen(PORT, async () => {
-    const nvim = attach({ proc: nvim_pid });
     // nvim.command("vsp | vsp | vsp");
     // const windows = await nvim.windows;
     // console.log("================" + windows.length);
