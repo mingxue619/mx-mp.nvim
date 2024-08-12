@@ -27,7 +27,7 @@ function M.preview()
 	-- vim.rpcnotify(3, "send_message", "Hello from Neovim!")
 	-- rpcrequest(job_id, 'nvim_eval', '"Hello " . "world!"')
 	-- rpcrequest(job_id, "nvim_eval")
-	print("job_id=" .. M.job_id)
+	-- print("job_id=" .. M.job_id)
 	-- local response vim.rpcrequest(job_id, 'nvim_eval', '"Hello " . "world!"')
 end
 function M.notify()
