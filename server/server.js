@@ -6,10 +6,9 @@ import WebSocket from "./websocket.js";
 const PORT = 8000;
 const servername = process.argv[2];
 
-debugger
 
 const httpServer = http.createServer((request, response) => {
-    let pathname = filter.httpFilter(request, response);
+    // let pathname = filter.httpFilter(request, response);
     response.writeHead(200, { "Content-Type": "text/plain" });
     response.end("Hello, world!\n");
 });
