@@ -1,17 +1,13 @@
-import { attach } from "neovim";
-import http from "http";
-import fs from "fs";
+
 import PageWebSocket from "./page-websocket.js";
-import MarkdownNvim from './markdown-nvim.js';
-const PORT = 8000;
+import MarkdownNvim from "./markdown-nvim.js";
+import HttpServer from "./http-server.js";
+
+const PORT = 1073;
 const servername = process.argv[2];
 
-const httpServer = http.createServer((request, response) => {
-    // let pathname = filter.httpFilter(request, response);
-    response.writeHead(200, { "Content-Type": "text/plain" });
-    response.end("Hello, world!\n");
-});
 
+const httpServer = HttpServer.createServer();
 const pws = new PageWebSocket(httpServer);
 const mdn = new MarkdownNvim(servername);
 pws.setupListeners(mdn);
