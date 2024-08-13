@@ -1,6 +1,6 @@
-import { WebSocketServer } from "ws";
+import { WebSocketServer, WebSocket} from "ws";
 
-export default class WebSocket {
+export default class PageWebSocket {
     constructor(httpServer) {
         this.wss = new WebSocketServer({ server: httpServer });
     }
@@ -26,7 +26,7 @@ export default class WebSocket {
 
     broadcast(message) {
         this.wss.clients.forEach((client) => {
-            if (client.readyState === WSServer.OPEN) {
+            if (client.readyState === WebSocket.OPEN) {
                 client.send(message);
             }
         });

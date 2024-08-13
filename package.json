@@ -5,7 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_OPTIONS=\"--import=./register.js\" node server/server.ts",
+    "start": "ALLOW_CONSOLE=1  node server/server.js",
+    "start-ts": "ALLOW_CONSOLE=1  NODE_OPTIONS=\"--import=./register.js\" node server/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,8 +16,9 @@
     "@types/node": "^20.14.9",
     "markdown-it": "^14.1.0",
     "neovim": "^5.1.0",
-    "ws": "^8.18.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "ws": "^8.18.0",
+    "@types/ws": "^8.5.12"
   }
 }

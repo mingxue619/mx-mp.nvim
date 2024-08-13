@@ -1,10 +1,17 @@
-import { attach } from "neovim";
+import * as child_process from 'node:child_process'
+import { attach, findNvim } from "neovim";
 
 export default class Nvim {
     constructor(servername) {
-        this.connection = attach({
-            socket: servername,
-        });
+        if (servername) {
+            this.connection = attach({
+                socket: servername,
+            });
+        } else {
+            const found = findNvim({ orderBy: "desc", minVersion: "0.9.0" });
+            const nvim_proc = child_process.spawn(found.matches[0].path, ["--clean", "--embed"], {});
+            this.connection = attach({ proc: nvim_proc });
+        }
     }
 
     setupListeners(ws) {
