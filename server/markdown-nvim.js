@@ -3,10 +3,12 @@ import { attach, findNvim } from "neovim";
 
 export default class MarkdownNvim {
     constructor(servername) {
+        debugger
         if (servername) {
             this.connection = attach({
                 socket: servername,
             });
+            // this.connection.command("vsp");
         } else {
             const found = findNvim({ orderBy: "desc", minVersion: "0.9.0" });
             const nvim_proc = child_process.spawn(found.matches[0].path, ["--clean", "--embed"], {});

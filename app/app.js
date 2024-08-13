@@ -20,9 +20,10 @@ function wsConnect(bufnr) {
 
     ws.onopen = function () {
         console.log("Connected to the server");
-        const message = {
+        const data = {
             bufnr: bufnr,
         };
+        let message = JSON.stringify(data);
         ws.send(message);
     };
 

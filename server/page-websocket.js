@@ -1,4 +1,4 @@
-import { WebSocketServer, WebSocket} from "ws";
+import { WebSocketServer, WebSocket } from "ws";
 
 export default class PageWebSocket {
     constructor(httpServer) {
@@ -10,7 +10,10 @@ export default class PageWebSocket {
             console.log("A WebSocket connection has been established.");
 
             ws.on("message", (message) => {
-                console.log(`Received: ${message}`);
+                debugger
+                const data = JSON.parse(message);
+                console.log("ws received:", data);
+                const bufnr = data.bufnr;
                 ws.send(`Echo: ${message}`);
             });
 
