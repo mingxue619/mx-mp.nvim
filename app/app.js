@@ -1,17 +1,36 @@
-const currentPort = window.location.port;
-console.log('Current Port:', currentPort);
+let bufnr = getBufferNumber();
+if (bufnr) {
+    wsConnect(bufnr);
+}
 
-const ws = new WebSocket("ws://localhost:1073");
+function getBufferNumber() {
+    const pathname = window.location.pathname;
+    const match = pathname.match(/\/page\/(\d+)/);
+    if (match && match[1]) {
+        const bufnr = match[1];
+        return bufnr;
+    } else {
+        alert("url is error");
+    }
+}
 
-ws.onopen = function () {
-    console.log("Connected to the server");
-    ws.send("Hello, Server!");
-};
+function wsConnect(bufnr) {
+    const host = window.location.host;
+    const ws = new WebSocket("ws://" + host);
 
-ws.onmessage = function (event) {
-    console.log(`Received from server: ${event.data}`);
-};
+    ws.onopen = function () {
+        console.log("Connected to the server");
+        const message = {
+            bufnr: bufnr,
+        };
+        ws.send(message);
+    };
 
-ws.onclose = function () {
-    console.log("Disconnected from the server");
-};
+    ws.onmessage = function (event) {
+        console.log(`Received from server: ${event.data}`);
+    };
+
+    ws.onclose = function () {
+        console.log("Disconnected from the server");
+    };
+}

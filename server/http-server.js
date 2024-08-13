@@ -10,6 +10,7 @@ import { types as mimeTypes } from './mime-types.js';
 export default class HttpServer {
     static createServer() {
         const httpServer = http.createServer((request, response) => {
+            debugger
             let pathname = url.parse(request.url).pathname;
             let realPath = UrlFilter.toRealPath(pathname);
             let exists = fs.existsSync(realPath);
