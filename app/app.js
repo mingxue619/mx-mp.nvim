@@ -15,23 +15,20 @@ function getBufferNumber() {
 }
 
 function wsConnect(bufnr) {
-    const host = window.location.host;
-    const ws = new WebSocket("ws://" + host);
-
-    ws.onopen = function () {
-        console.log("Connected to the server");
+    // const host = window.location.host;
+    // const ws = new WebSocket("ws://" + host);
+    const socket = io();
+    socket.on("connect", function () {
+        console.log("Connected to server");
         const data = {
             bufnr: bufnr,
         };
         let message = JSON.stringify(data);
-        ws.send(message);
-    };
+        socket.emit("init", message);
+    });
 
-    ws.onmessage = function (event) {
-        console.log(`Received from server: ${event.data}`);
-    };
-
-    ws.onclose = function () {
-        console.log("Disconnected from the server");
-    };
+    socket.on("refresh-content", function (msg) {
+        debugger
+        console.log("received message: " + msg);
+    });
 }

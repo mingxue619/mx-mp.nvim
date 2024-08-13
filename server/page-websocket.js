@@ -1,28 +1,25 @@
-import { WebSocketServer, WebSocket } from "ws";
+// import { WebSocketServer, WebSocket } from "ws";
+import { Server } from "socket.io";
 
 export default class PageWebSocket {
     constructor(httpServer) {
-        this.wss = new WebSocketServer({ server: httpServer });
+        this.io = new Server(httpServer, {});
+        // this.wss = new WebSocketServer({ server: httpServer });
     }
 
     setupListeners(nvim) {
-        this.wss.on("connection", (ws) => {
-            console.log("A WebSocket connection has been established.");
-
-            ws.on("message", (message) => {
-                debugger
-                const data = JSON.parse(message);
-                console.log("ws received:", data);
-                const bufnr = data.bufnr;
-                ws.send(`Echo: ${message}`);
+        this.io.on("connection", async (client) => {
+            debugger;
+            console.log("a user connected");
+            client.on("init", (msg) => {
+                console.log("message: " + msg);
+                client.emit("refresh-content", msg);
             });
-
-            ws.on("close", () => {
-                console.log("WebSocket connection closed.");
-            });
-
-            ws.on("error", (err) => {
-                console.error("WebSocket error:", err);
+            client.on("disconnect", () => {
+                // console.log("user disconnected");
+                // const data = JSON.parse(message);
+                // console.log("ws received:", data);
+                // ws.send(`Echo: ${message}`);
             });
         });
     }

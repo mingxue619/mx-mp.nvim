@@ -2,14 +2,14 @@ local M = {}
 
 function M.preview()
 	local servername = vim.v.servername
-	-- print('Server Name: '..tostring(servername))
+	-- lua print(servername)
 	-- local pid = vim.fn.getpid()
 	local script_path = debug.getinfo(1, "S").source:sub(2)
 	-- local script_path = vim.fn.expand("<sfile>:p")
 	local project_dir = script_path:match("(.*/).-/"):match("(.*/).-/")
 	-- local cmd = "ALLOW_CONSOLE=1 node " .. project_dir .. "server/server.js " .. servername .. " > /tmp/mxmd-log.txt"
-	-- local cmd = "cd " .. project_dir .. " && ALLOW_CONSOLE=1  node --inspect server/server.js " .. servername
-	local cmd = "cd " .. project_dir .. " && ALLOW_CONSOLE=1  node --inspect-brk server/server.js " .. servername
+	local cmd = "cd " .. project_dir .. " && ALLOW_CONSOLE=1  node --inspect server/server.js " .. servername
+	-- local cmd = "cd " .. project_dir .. " && ALLOW_CONSOLE=1  node --inspect-brk server/server.js " .. servername
 	print("cmd: " .. cmd)
 	-- local job_id = vim.fn.jobstart({ "node", project_dir .. "server.mjs", ">> /tmp/nlog.txt" }, {
 	M.job_id = vim.fn.jobstart(cmd, {
