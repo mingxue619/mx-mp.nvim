@@ -1,7 +1,7 @@
 import * as child_process from 'node:child_process'
 import { attach, findNvim } from "neovim";
 
-export default class Nvim {
+export default class MarkdownNvim {
     constructor(servername) {
         if (servername) {
             this.connection = attach({
