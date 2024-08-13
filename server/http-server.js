@@ -1,8 +1,11 @@
 import http from "http";
 import url from "url";
-import fs from 'fs';
-
+import fs from "fs";
+import path from "path";
 import UrlFilter from "./url-filter.js";
+import { types as mimeTypes } from './mime-types.js';  
+  
+
 
 export default class HttpServer {
     static createServer() {
@@ -12,10 +15,10 @@ export default class HttpServer {
             let exists = fs.existsSync(realPath);
             if (exists) {
                 try {
-                    file = fs.readFileSync(realPath, "binary");
+                    let file = fs.readFileSync(realPath, "binary");
                     let ext = path.extname(realPath);
                     ext = ext ? ext.slice(1) : "unknown";
-                    var contentType = mine[ext] || "text/plain";
+                    let contentType = mimeTypes[ext] || "text/plain";
                     let header = {
                         "Content-Type": contentType,
                     };

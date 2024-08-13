@@ -5,6 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "debug": "ALLOW_CONSOLE=1  node --inspect server/server.js",
     "start": "ALLOW_CONSOLE=1  node server/server.js",
     "start-ts": "ALLOW_CONSOLE=1  NODE_OPTIONS=\"--import=./register.js\" node server/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
