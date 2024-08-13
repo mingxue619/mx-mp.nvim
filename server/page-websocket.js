@@ -7,19 +7,20 @@ export default class PageWebSocket {
         // this.wss = new WebSocketServer({ server: httpServer });
     }
 
-    setupListeners(nvim) {
+    setupListeners(mdn) {
         this.io.on("connection", async (client) => {
-            debugger;
+            debugger
             console.log("a user connected");
             client.on("init", (msg) => {
-                console.log("message: " + msg);
+                debugger
+                console.log("ws init received: " + msg);
+                const data = JSON.parse(msg);
+                let bufnr = data.bufnr;
+                // let content = mdn.getBufferLines(bufnr);
                 client.emit("refresh-content", msg);
             });
             client.on("disconnect", () => {
-                // console.log("user disconnected");
-                // const data = JSON.parse(message);
-                // console.log("ws received:", data);
-                // ws.send(`Echo: ${message}`);
+                console.log("user disconnected");
             });
         });
     }

@@ -17,14 +17,16 @@ function getBufferNumber() {
 function wsConnect(bufnr) {
     // const host = window.location.host;
     // const ws = new WebSocket("ws://" + host);
+    debugger
     const socket = io();
     socket.on("connect", function () {
+        debugger
         console.log("Connected to server");
         const data = {
             bufnr: bufnr,
         };
-        let message = JSON.stringify(data);
-        socket.emit("init", message);
+        let msg = JSON.stringify(data);
+        socket.emit("init", msg);
     });
 
     socket.on("refresh-content", function (msg) {
