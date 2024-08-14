@@ -26,7 +26,7 @@ export default class MarkdownNvim {
     }
     async getBufferLines(bufnr) {
         debugger;
-        const buffers = await plugin.nvim.buffers;
+        const buffers = await this.connection.buffers;
         // const content = await this.getLines();
         buffers.forEach(async (buffer) => {
             if (buffer.id === Number(bufnr)) {
