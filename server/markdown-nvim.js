@@ -31,6 +31,7 @@ export default class MarkdownNvim {
         if (!buffer) {
             return;
         }
+        // https://neovim.io/doc/user/builtin.html#winline()
         const winline = await this.connection.call("winline");
         const currentWindow = await this.connection.window;
         const winheight = await this.connection.call("winheight", currentWindow.id);
