@@ -8,7 +8,8 @@ function M.preview()
 	-- local script_path = vim.fn.expand("<sfile>:p")
 	local project_dir = script_path:match("(.*/).-/"):match("(.*/).-/")
 	-- local cmd = "ALLOW_CONSOLE=1 node " .. project_dir .. "server/server.js " .. servername .. " > /tmp/mxmd-log.txt"
-	local cmd = "cd " .. project_dir .. " && ALLOW_CONSOLE=1  node --inspect server/server.js " .. servername
+	local cmd = "cd " .. project_dir .. " && ALLOW_CONSOLE=1  node --inspect server/server.js " .. servername .. " > ./mxmd.log"
+
 	-- local cmd = "cd " .. project_dir .. " && ALLOW_CONSOLE=1  node --inspect-brk server/server.js " .. servername
 	print("cmd: " .. cmd)
 	-- local job_id = vim.fn.jobstart({ "node", project_dir .. "server.mjs", ">> /tmp/nlog.txt" }, {

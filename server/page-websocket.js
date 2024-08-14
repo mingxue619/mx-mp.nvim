@@ -22,24 +22,21 @@ export default class PageWebSocket {
         //
         // });
         this.wss.on("connection", async (ws) => {
-            debugger;
-            // console.log("A WebSocket connection has been established.");
+            console.log("A WebSocket connection has been established.");
             ws.on("error", async (err) => {
-                debugger;
-                // console.error("WebSocket error:", err);
+                console.error("WebSocket error:", err);
             });
             ws.on("message", async (msg) => {
                 debugger;
-                // console.log("ws init received: " + msg);
+                console.log("ws init received: " + msg);
                 const data = JSON.parse(msg);
                 let bufnr = data.bufnr;
-                // let content = mdn.getBufferLines(bufnr);
-                // ws.send(`Echo: ${msg}`);
+                let content = await mdn.getBufferLines(bufnr);
+                ws.send(`Echo: ${content}`);
             });
 
             ws.on("close", async () => {
-                debugger;
-                // console.log("WebSocket connection closed.");
+                console.log("WebSocket connection closed.");
             });
         });
     }
