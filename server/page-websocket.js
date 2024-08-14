@@ -11,7 +11,6 @@ export default class PageWebSocket {
                 console.error("WebSocket error:", err);
             });
             ws.on("message", async (msg) => {
-                debugger;
                 console.log("ws message received: %s", msg);
                 const data = JSON.parse(msg);
                 let action = data.action;
@@ -30,10 +29,8 @@ export default class PageWebSocket {
         });
     }
 
-    broadcastByBufferId(bufferId, data) {
-        debugger
+    broadcast(data) {
         this.wss.clients.forEach((client) => {
-            debugger
             if (client.readyState === WebSocket.OPEN) {
                 let message = JSON.stringify(data);
                 client.send(message);

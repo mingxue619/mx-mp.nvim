@@ -3,12 +3,10 @@ import { attach, findNvim } from "neovim";
 
 export default class MarkdownNvim {
     constructor(servername) {
-        debugger;
         if (servername) {
             this.connection = attach({
                 socket: servername,
             });
-            debugger;
             // this.connection.command("vsp");
         } else {
             const found = findNvim({ orderBy: "desc", minVersion: "0.9.0" });
@@ -29,8 +27,7 @@ export default class MarkdownNvim {
         this.connection.on("request", (action, args, resp) => {
             resp.send();
         });
-        this.connection.on("notification", (action, args) => {
-            debugger
+        this.connection.on("notification", async (action, args) => {
             if (!action) {
                 return;
             }
@@ -40,14 +37,13 @@ export default class MarkdownNvim {
             }
             let bufferInfo = {};
             if (action === "CursorMoved") {
-                bufferInfo = this.getCursorInfo(bufferId);
+                bufferInfo = await this.getCursorInfo(bufferId);
             }
             if (!bufferInfo) {
                 bufferInfo = {};
             }
             bufferInfo.action = action;
-            ws.broadcastByBufferId(bufferId, bufferInfo);
-            debugger;
+            ws.broadcast(bufferInfo);
         });
     }
     // echo bufnr('%')
@@ -82,7 +78,6 @@ export default class MarkdownNvim {
         return bufferInfo;
     }
     async getBufferInfo(bufnr) {
-        debugger
         let buffer = await this.getBufferById(bufnr);
         if (!buffer) {
             return;

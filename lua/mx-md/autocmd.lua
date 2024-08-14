@@ -30,7 +30,8 @@ M.setup_autocmd = function(opt)
 				if not M.timeAllow() then
 					return
 				end
-				rpc.notify("CursorMoved", 0)
+	            local current_buf = vim.api.nvim_get_current_buf()
+				rpc.notify("CursorMoved", current_buf)
 			end)
 		end,
 		desc = "Throttle cursor move events",
