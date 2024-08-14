@@ -19,19 +19,34 @@ function M.timeAllow()
 	return false
 end
 
+function M.onCursorMoved(action)
+	if not M.isPreviewBuffer() then
+		return
+	end
+	if not M.timeAllow() then
+		return
+	end
+	local current_buf = vim.api.nvim_get_current_buf()
+	rpc.notify(action, current_buf)
+end
+
 M.setup_autocmd = function(opt)
-	vim.api.nvim_create_autocmd("CursorMoved", {
+    local CursorMoved = "CursorMoved"
+	vim.api.nvim_create_autocmd(CursorMoved, {
 		pattern = "*",
 		callback = function()
-			vim.schedule(function()
-				if not M.isPreviewBuffer() then
-					return
-				end
-				if not M.timeAllow() then
-					return
-				end
-	            local current_buf = vim.api.nvim_get_current_buf()
-				rpc.notify("CursorMoved", current_buf)
+			vim.schedule(function ()
+                M.onCursorMoved(CursorMoved)
+			end)
+		end,
+		desc = "Throttle cursor move events",
+	})
+    local CursorMovedI = "CursorMovedI"
+	vim.api.nvim_create_autocmd(CursorMovedI, {
+		pattern = "*",
+		callback = function()
+			vim.schedule(function ()
+                M.onCursorMoved(CursorMovedI)
 			end)
 		end,
 		desc = "Throttle cursor move events",
