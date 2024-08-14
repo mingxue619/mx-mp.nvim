@@ -28,11 +28,16 @@ export default class PageWebSocket {
             });
             ws.on("message", async (msg) => {
                 debugger;
-                console.log("ws init received: " + msg);
+                console.log("ws message received: %s", msg);
                 const data = JSON.parse(msg);
-                let bufnr = data.bufnr;
-                let bufferInfo = await mdn.getBufferInfo(bufnr);
-                ws.send(`Echo: ${bufferInfo}`);
+                let action = data.action;
+                if (action === "init") {
+                    let bufnr = data.bufnr;
+                    let bufferInfo = await mdn.getBufferInfo(bufnr);
+                    bufferInfo.action = action;
+                    let bufferInfoStr = JSON.stringify(bufferInfo);
+                    ws.send(bufferInfoStr);
+                }
             });
 
             ws.on("close", async () => {

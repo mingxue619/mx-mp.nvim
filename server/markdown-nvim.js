@@ -25,12 +25,12 @@ export default class MarkdownNvim {
         });
     }
     async getBufferInfo(bufnr) {
-        debugger;
         const buffers = await this.connection.buffers;
         // const content = await this.getLines();
-        let buffer = buffers.find((buffer) => {
-            buffer.id === Number(bufnr);
-        });
+        let buffer = buffers.find((buffer) => buffer.id === Number(bufnr));
+        if (!buffer) {
+            return;
+        }
         const winline = await this.connection.call("winline");
         const currentWindow = await this.connection.window;
         const winheight = await this.connection.call("winheight", currentWindow.id);

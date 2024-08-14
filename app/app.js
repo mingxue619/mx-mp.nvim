@@ -20,6 +20,7 @@ function wsConnect(bufnr) {
     ws.onopen = function () {
         console.log("Connected to the server");
         const data = {
+            action: "init",
             bufnr: bufnr,
         };
         let msg = JSON.stringify(data);
@@ -27,8 +28,10 @@ function wsConnect(bufnr) {
     };
 
     ws.onmessage = function (event) {
-        debugger
         console.log(`Received from server: ${event.data}`);
+        let data = event.data;
+        let bufferInfo = JSON.parse(data);
+        debugger;
     };
 
     ws.onclose = function () {
