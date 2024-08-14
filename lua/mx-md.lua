@@ -1,4 +1,4 @@
-local rpc = require("mx-md.rpc");
+local job = require("mx-md.job");
 local M = {}
 
 -- function M.build(cfg)
@@ -11,7 +11,7 @@ local M = {}
 
 M.setup = function(opt)
 	vim.api.nvim_create_user_command("MXMDPreview", function(res)
-        rpc.preview();
+        job.preview();
 	end, {})
 end
 

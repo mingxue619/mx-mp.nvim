@@ -8,12 +8,30 @@ export default class MarkdownNvim {
             this.connection = attach({
                 socket: servername,
             });
+            debugger;
             // this.connection.command("vsp");
         } else {
             const found = findNvim({ orderBy: "desc", minVersion: "0.9.0" });
             const nvim_proc = child_process.spawn(found.matches[0].path, ["--clean", "--embed"], {});
             this.connection = attach({ proc: nvim_proc });
         }
+        this.connection.channelId
+            .then(async (channelId) => {
+                console.log("channelId: " + channelId);
+                await this.connection.setVar("mxmd_node_channel_id", channelId);
+            })
+            .catch((e) => {
+                console.log("error channelId: ", e);
+            });
+        // let channelId = this.connection.channelId
+        // console.log("channelId: ", channelId);
+        // .then(async (channelId) => {
+        //     console.log("channelId: ", channelId);
+        //     await this.connection.setVar("mxmd_node_channel_id", channelId);
+        // })
+        // .catch((e) => {
+        //     console.log("error channelId: ", e);
+        // });
     }
 
     setupListeners(ws) {
