@@ -6,7 +6,7 @@ function M.notify(action, bufnr)
         return
     end
 	if mxmd_node_channel_id then
-		print("Channel ID:", mxmd_node_channel_id)
+		print("notify channel id:", mxmd_node_channel_id)
 		vim.rpcnotify(mxmd_node_channel_id, action, bufnr)
 	else
 		print("Variable not found")

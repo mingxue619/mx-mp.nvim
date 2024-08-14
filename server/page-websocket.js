@@ -30,9 +30,12 @@ export default class PageWebSocket {
         });
     }
 
-    broadcast(message) {
+    broadcastByBufferId(bufferId, data) {
+        debugger
         this.wss.clients.forEach((client) => {
+            debugger
             if (client.readyState === WebSocket.OPEN) {
+                let message = JSON.stringify(data);
                 client.send(message);
             }
         });

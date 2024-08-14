@@ -31,12 +31,34 @@ export default class MarkdownNvim {
         });
         this.connection.on("notification", (action, args) => {
             debugger
+            if (!action) {
+                return;
+            }
+            let bufferId = args[0];
+            if (!bufferId || bufferId <= 0) {
+                return;
+            }
+            let bufferInfo = {};
+            if (action === "CursorMoved") {
+                bufferInfo = this.getCursorInfo(bufferId);
+            }
+            if (!bufferInfo) {
+                bufferInfo = {};
+            }
+            bufferInfo.action = action;
+            ws.broadcastByBufferId(bufferId, bufferInfo);
+            debugger;
         });
     }
-    async getBufferInfo(bufnr) {
+    // echo bufnr('%')
+    async getBufferById(bufnr) {
         const buffers = await this.connection.buffers;
         // const content = await this.getLines();
         let buffer = buffers.find((buffer) => buffer.id === Number(bufnr));
+        return buffer;
+    }
+    async getCursorInfo(bufnr) {
+        let buffer = await this.getBufferById(bufnr);
         if (!buffer) {
             return;
         }
@@ -47,11 +69,37 @@ export default class MarkdownNvim {
         const cursor = await this.connection.call("getpos", ".");
         const pageTitle = await this.connection.getVar("mkdp_page_title");
         const name = await buffer.name;
-        const content = await buffer.getLines();
         const currentBuffer = await this.connection.buffer;
         const bufferInfo = {
-            id: buffer.id,
-            currentId: currentBuffer.id,
+            bufferId: buffer.id,
+            currentBufferId: currentBuffer.id,
+            winline,
+            winheight,
+            cursor,
+            pageTitle,
+            name,
+        };
+        return bufferInfo;
+    }
+    async getBufferInfo(bufnr) {
+        debugger
+        let buffer = await this.getBufferById(bufnr);
+        if (!buffer) {
+            return;
+        }
+        // https://neovim.io/doc/user/builtin.html#winline()
+        const winline = await this.connection.call("winline");
+        const currentWindow = await this.connection.window;
+        const winheight = await this.connection.call("winheight", currentWindow.id);
+        const cursor = await this.connection.call("getpos", ".");
+        const pageTitle = await this.connection.getVar("mkdp_page_title");
+        const name = await buffer.name;
+        // const lines = await buffer.lines;
+        const content = await buffer.getLines()
+        const currentBuffer = await this.connection.buffer;
+        const bufferInfo = {
+            bufferId: buffer.id,
+            currentBufferId: currentBuffer.id,
             winline,
             winheight,
             cursor,
