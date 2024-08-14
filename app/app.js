@@ -15,22 +15,46 @@ function getBufferNumber() {
 }
 
 function wsConnect(bufnr) {
-    // const host = window.location.host;
-    // const ws = new WebSocket("ws://" + host);
     debugger
-    const socket = io();
-    socket.on("connect", function () {
+    const host = window.location.host;
+    const ws = new WebSocket("ws://" + host);
+    ws.onopen = function () {
         debugger
-        console.log("Connected to server");
-        const data = {
-            bufnr: bufnr,
-        };
-        let msg = JSON.stringify(data);
-        socket.emit("init", msg);
-    });
+        console.log("Connected to the server");
+        // const data = {
+        //     bufnr: bufnr,
+        // };
+        // let msg = JSON.stringify(data);
+        // ws.send(msg);
+    };
 
-    socket.on("refresh-content", function (msg) {
+    ws.onmessage = function (event) {
         debugger
-        console.log("received message: " + msg);
-    });
+        console.log(`Received from server: ${event.data}`);
+    };
+
+    ws.onclose = function () {
+        debugger
+        console.log("Disconnected from the server");
+    };
 }
+
+// function wsConnect(bufnr) {
+//     // const host = window.location.host;
+//     // const ws = new WebSocket("ws://" + host);
+//     const socket = io();
+//     socket.on("connect", function () {
+//         debugger
+//         console.log("Connected to server");
+//         const data = {
+//             bufnr: bufnr,
+//         };
+//         let msg = JSON.stringify(data);
+//         socket.emit("init", msg);
+//     });
+//
+//     socket.on("refresh-content", function (msg) {
+//         debugger
+//         console.log("received message: " + msg);
+//     });
+// }
