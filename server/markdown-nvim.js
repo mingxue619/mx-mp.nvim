@@ -17,10 +17,10 @@ export default class MarkdownNvim {
     }
 
     setupListeners(ws) {
-        this.connection.on("request", (method, args, resp) => {
+        this.connection.on("request", (action, args, resp) => {
             resp.send();
         });
-        this.connection.on("notification", (method, args, resp) => {
+        this.connection.on("notification", (action, args, resp) => {
             resp.send();
         });
     }

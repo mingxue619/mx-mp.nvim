@@ -1,6 +1,7 @@
 local M = {}
 
 function M.preview()
+	vim.g.mxmd_preview_bufnr = vim.api.nvim_get_current_buf()
 	local servername = vim.v.servername
 	-- lua print(servername)
 	-- local pid = vim.fn.getpid()
@@ -8,7 +9,11 @@ function M.preview()
 	-- local script_path = vim.fn.expand("<sfile>:p")
 	local project_dir = script_path:match("(.*/).-/"):match("(.*/).-/")
 	-- local cmd = "ALLOW_CONSOLE=1 node " .. project_dir .. "server/server.js " .. servername .. " > /tmp/mxmd-log.txt"
-	local cmd = "cd " .. project_dir .. " && ALLOW_CONSOLE=1  node --inspect server/server.js " .. servername .. " > ./mxmd.log"
+	local cmd = "cd "
+		.. project_dir
+		.. " && ALLOW_CONSOLE=1  node --inspect server/server.js "
+		.. servername
+		.. " > ./mxmd.log"
 
 	-- local cmd = "cd " .. project_dir .. " && ALLOW_CONSOLE=1  node --inspect-brk server/server.js " .. servername
 	print("cmd: " .. cmd)
@@ -32,11 +37,11 @@ function M.preview()
 	-- print("job_id=" .. M.job_id)
 	-- local response vim.rpcrequest(job_id, 'nvim_eval', '"Hello " . "world!"')
 end
-function M.notify()
+function M.notify(action, bufnr)
 	local mxmd_node_channel_id = vim.api.nvim_get_var("mxmd_node_channel_id")
 	if mxmd_node_channel_id then
 		print("Channel ID:", mxmd_node_channel_id)
-		vim.rpcnotify(mxmd_node_channel_id, "send_message", "Hello from Neovim!")
+		vim.rpcnotify(mxmd_node_channel_id, action, bufnr)
 	else
 		print("Variable not found")
 	end
