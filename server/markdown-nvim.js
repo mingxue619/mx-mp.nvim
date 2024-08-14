@@ -23,23 +23,14 @@ export default class MarkdownNvim {
             .catch((e) => {
                 console.log("error channelId: ", e);
             });
-        // let channelId = this.connection.channelId
-        // console.log("channelId: ", channelId);
-        // .then(async (channelId) => {
-        //     console.log("channelId: ", channelId);
-        //     await this.connection.setVar("mxmd_node_channel_id", channelId);
-        // })
-        // .catch((e) => {
-        //     console.log("error channelId: ", e);
-        // });
     }
 
     setupListeners(ws) {
         this.connection.on("request", (action, args, resp) => {
             resp.send();
         });
-        this.connection.on("notification", (action, args, resp) => {
-            resp.send();
+        this.connection.on("notification", (action, args) => {
+            debugger
         });
     }
     async getBufferInfo(bufnr) {
