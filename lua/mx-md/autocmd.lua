@@ -10,9 +10,9 @@ function M.isPreviewBuffer()
 	local current_buf = vim.api.nvim_get_current_buf()
 	return current_buf == mxmd_node_channel_id
 end
-function M.timeAllow()
+function M.timeAllow(nano) -- nano/1e6 == ms
 	local now = vim.loop.hrtime()
-	if now - M.last_call > 500e6 then -- nano/1e6 == ms
+	if now - M.last_call >  then 
 		M.last_call = now
 		return true
 	end
@@ -23,7 +23,7 @@ function M.onCursorMoved(action)
 	if not M.isPreviewBuffer() then
 		return
 	end
-	if not M.timeAllow() then
+	if not M.timeAllow(500e6) then
 		return
 	end
 	local current_buf = vim.api.nvim_get_current_buf()
@@ -31,7 +31,7 @@ function M.onCursorMoved(action)
 end
 
 function M.onContentRefresh(action)
-	if not M.isPreviewBuffer() then
+	if not M.isPreviewBuffer(100e6) then
 		return
 	end
 	local current_buf = vim.api.nvim_get_current_buf()
@@ -51,7 +51,7 @@ M.setup_autocmd = function(opt)
 			desc = "Throttle cursor move events",
 		})
 	end
-	local contentRefreshActionArray = { "CursorHold", "CursorHoldI" }
+	local contentRefreshActionArray = { "CursorHold", "CursorHoldI", "BufWrite", "InsertLeave" }
 	for _, action in ipairs(contentRefreshActionArray) do
 		vim.api.nvim_create_autocmd(action, {
 			pattern = "*",
