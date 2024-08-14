@@ -24,34 +24,31 @@ export default class MarkdownNvim {
             resp.send();
         });
     }
-    async getBufferLines(bufnr) {
+    async getBufferInfo(bufnr) {
         debugger;
         const buffers = await this.connection.buffers;
         // const content = await this.getLines();
-        buffers.forEach(async (buffer) => {
-            if (buffer.id === Number(bufnr)) {
-                const winline = await this.connection.call("winline");
-                const currentWindow = await this.connection.window;
-                const winheight = await this.connection.call("winheight", currentWindow.id);
-                const cursor = await this.connection.call("getpos", ".");
-                const options = await this.connection.getVar("mkdp_preview_options");
-                const pageTitle = await this.connection.getVar("mkdp_page_title");
-                const theme = await this.connection.getVar("mkdp_theme");
-                const name = await buffer.name;
-                const content = await buffer.getLines();
-                const currentBuffer = await this.connection.buffer;
-                // client.emit("refresh_content", {
-                //     options,
-                //     isActive: currentBuffer.id === buffer.id,
-                //     winline,
-                //     winheight,
-                //     cursor,
-                //     pageTitle,
-                //     theme,
-                //     name,
-                //     content,
-                // });
-            }
+        let buffer = buffers.find((buffer) => {
+            buffer.id === Number(bufnr);
         });
+        const winline = await this.connection.call("winline");
+        const currentWindow = await this.connection.window;
+        const winheight = await this.connection.call("winheight", currentWindow.id);
+        const cursor = await this.connection.call("getpos", ".");
+        const pageTitle = await this.connection.getVar("mkdp_page_title");
+        const name = await buffer.name;
+        const content = await buffer.getLines();
+        const currentBuffer = await this.connection.buffer;
+        const bufferInfo = {
+            id: buffer.id,
+            currentId: currentBuffer.id,
+            winline,
+            winheight,
+            cursor,
+            pageTitle,
+            name,
+            content,
+        };
+        return bufferInfo;
     }
 }

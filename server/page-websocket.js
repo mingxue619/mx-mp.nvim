@@ -31,8 +31,8 @@ export default class PageWebSocket {
                 console.log("ws init received: " + msg);
                 const data = JSON.parse(msg);
                 let bufnr = data.bufnr;
-                let content = await mdn.getBufferLines(bufnr);
-                ws.send(`Echo: ${content}`);
+                let bufferInfo = await mdn.getBufferInfo(bufnr);
+                ws.send(`Echo: ${bufferInfo}`);
             });
 
             ws.on("close", async () => {
