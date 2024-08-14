@@ -36,7 +36,7 @@ export default class MarkdownNvim {
                 return;
             }
             let bufferInfo = {};
-            if (action === "CursorMoved") {
+            if (action === "CursorMoved" || action === "CursorMovedI") {
                 bufferInfo = await this.getCursorInfo(bufferId);
             }
             if (!bufferInfo) {
@@ -90,7 +90,7 @@ export default class MarkdownNvim {
         const pageTitle = await this.connection.getVar("mkdp_page_title");
         const name = await buffer.name;
         // const lines = await buffer.lines;
-        const content = await buffer.getLines()
+        const content = await buffer.getLines();
         const currentBuffer = await this.connection.buffer;
         const bufferInfo = {
             bufferId: buffer.id,

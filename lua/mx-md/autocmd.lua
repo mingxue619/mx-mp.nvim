@@ -30,27 +30,39 @@ function M.onCursorMoved(action)
 	rpc.notify(action, current_buf)
 end
 
+function M.onContentRefresh(action)
+	if not M.isPreviewBuffer() then
+		return
+	end
+	local current_buf = vim.api.nvim_get_current_buf()
+	rpc.notify(action, current_buf)
+end
+
 M.setup_autocmd = function(opt)
-    local CursorMoved = "CursorMoved"
-	vim.api.nvim_create_autocmd(CursorMoved, {
-		pattern = "*",
-		callback = function()
-			vim.schedule(function ()
-                M.onCursorMoved(CursorMoved)
-			end)
-		end,
-		desc = "Throttle cursor move events",
-	})
-    local CursorMovedI = "CursorMovedI"
-	vim.api.nvim_create_autocmd(CursorMovedI, {
-		pattern = "*",
-		callback = function()
-			vim.schedule(function ()
-                M.onCursorMoved(CursorMovedI)
-			end)
-		end,
-		desc = "Throttle cursor move events",
-	})
+	local cursorMoveActionArray = { "CursorMoved", "CursorMovedI" }
+	for _, action in ipairs(cursorMoveActionArray) do
+		vim.api.nvim_create_autocmd(action, {
+			pattern = "*",
+			callback = function()
+				vim.schedule(function()
+					M.onCursorMoved(action)
+				end)
+			end,
+			desc = "Throttle cursor move events",
+		})
+	end
+	local contentRefreshActionArray = { "CursorHold", "CursorHoldI" }
+	for _, action in ipairs(contentRefreshActionArray) do
+		vim.api.nvim_create_autocmd(action, {
+			pattern = "*",
+			callback = function()
+				vim.schedule(function()
+					M.onContentRefresh(action)
+				end)
+			end,
+			desc = "Throttle cursor move events",
+		})
+	end
 end
 
 return M
