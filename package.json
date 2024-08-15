@@ -19,6 +19,7 @@
     "@types/ws": "^8.5.12",
     "markdown-it": "^14.1.0",
     "markdown-it-sub": "^2.0.0",
+    "markdown-it-sup": "^2.0.0",
     "neovim": "^5.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",

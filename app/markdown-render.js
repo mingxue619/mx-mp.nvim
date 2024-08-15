@@ -11,7 +11,7 @@ class Markdown {
             return;
         }
         this.content = newContent;
-        const newHtml = md.use(window.markdownitSub).render(newContent);
+        const newHtml = md.use(window.markdownitSub).use(window.markdownitSup).render(newContent);
         const contentElement = document.getElementById("content");
         contentElement.innerHTML = newHtml;
     }
