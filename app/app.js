@@ -31,7 +31,17 @@ function wsConnect(bufnr) {
         console.log(`Received from server: ${event.data}`);
         let data = event.data;
         let bufferInfo = JSON.parse(data);
-        debugger;
+        let action = bufferInfo.action;
+        let cursorAction = ["CursorMoved", "CursorMovedI"];
+        let contentAction = ["Init", "CursorHold", "BufWrite", "InsertLeave"];
+        if (cursorAction.inclues(action)) {
+        } else if (contentAction.inclues(action)) {
+            let success = renderMarkdown(bufferInfo);
+            if(!success) {
+                return;
+            }
+            scrollPage(bufferInfo);
+        }
     };
 
     ws.onclose = function () {

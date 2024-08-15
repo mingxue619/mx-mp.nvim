@@ -14,7 +14,7 @@ export default class PageWebSocket {
                 console.log("ws message received: %s", msg);
                 const data = JSON.parse(msg);
                 let action = data.action;
-                if (action === "init") {
+                if (action === "Init") {
                     let bufnr = data.bufnr;
                     let bufferInfo = await mdn.getBufferInfo(bufnr);
                     bufferInfo.action = action;
