@@ -39,6 +39,9 @@ export default class MarkdownNvim {
             if (action === "CursorMoved" || action === "CursorMovedI") {
                 bufferInfo = await this.getCursorInfo(bufferId);
             }
+            if (action === "CursorHold" || action === "BufWrite" || action === "InsertLeave") {
+                bufferInfo = await this.getBufferInfo(bufferId);
+            }
             if (!bufferInfo) {
                 bufferInfo = {};
             }

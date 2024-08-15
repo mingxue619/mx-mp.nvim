@@ -33,9 +33,9 @@ function M.onCursorMoved(action)
 	if not M.isPreviewBuffer() then
 		return
 	end
-	if not M.cursorTimeAllow() then
-		return
-	end
+	-- if not M.cursorTimeAllow() then
+	-- 	return
+	-- end
 	local current_buf = vim.api.nvim_get_current_buf()
 	rpc.notify(action, current_buf)
 end
@@ -44,9 +44,9 @@ function M.onContentRefresh(action)
 	if not M.isPreviewBuffer() then
 		return
 	end
-	if not M.contentTimeAllow() then
-		return
-	end
+	-- if not M.contentTimeAllow() then
+	-- 	return
+	-- end
 	local current_buf = vim.api.nvim_get_current_buf()
 	rpc.notify(action, current_buf)
 end
