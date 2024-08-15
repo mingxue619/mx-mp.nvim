@@ -1,7 +1,6 @@
 class Markdown {
     // constructor() {}
     renderMarkdown(bufferInfo) {
-        debugger;
         const content = bufferInfo.content;
         if (!content) {
             return false;
@@ -15,6 +14,5 @@ class Markdown {
         const newHtml = md.render(newContent);
         const contentElement = document.getElementById('content');
         contentElement.innerHTML = newHtml;
-        debugger;
     }
 }
