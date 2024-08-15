@@ -18,7 +18,7 @@ function M.preview()
 		.. " > ./mxmd.log"
 
 	-- local cmd = "cd " .. project_dir .. " && ALLOW_CONSOLE=1  node --inspect-brk server/server.js " .. servername
-	print("cmd: " .. cmd)
+	-- print("cmd: " .. cmd)
 	-- local job_id = vim.fn.jobstart({ "node", project_dir .. "server.mjs", ">> /tmp/nlog.txt" }, {
 	M.job_id = vim.fn.jobstart(cmd, {
 		rpc = true,
@@ -41,6 +41,7 @@ function M.preview()
 	-- rpcrequest(job_id, "nvim_eval")
 	-- print("job_id=" .. M.job_id)
 	-- local response vim.rpcrequest(job_id, 'nvim_eval', '"Hello " . "world!"')
+    print("bufnr = " .. vim.g.mxmd_preview_bufnr)
 end
 
 return M
