@@ -1,3 +1,4 @@
+let markdown = new Markdown;
 let bufnr = getBufferNumber();
 if (bufnr) {
     wsConnect(bufnr);
@@ -20,7 +21,7 @@ function wsConnect(bufnr) {
     ws.onopen = function () {
         console.log("Connected to the server");
         const data = {
-            action: "init",
+            action: "Init",
             bufnr: bufnr,
         };
         let msg = JSON.stringify(data);
@@ -28,15 +29,16 @@ function wsConnect(bufnr) {
     };
 
     ws.onmessage = function (event) {
+        debugger
         console.log(`Received from server: ${event.data}`);
         let data = event.data;
         let bufferInfo = JSON.parse(data);
         let action = bufferInfo.action;
         let cursorAction = ["CursorMoved", "CursorMovedI"];
         let contentAction = ["Init", "CursorHold", "BufWrite", "InsertLeave"];
-        if (cursorAction.inclues(action)) {
-        } else if (contentAction.inclues(action)) {
-            let success = renderMarkdown(bufferInfo);
+        if (cursorAction.includes(action)) {
+        } else if (contentAction.includes(action)) {
+            let success = markdown.renderMarkdown(bufferInfo);
             if(!success) {
                 return;
             }

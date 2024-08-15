@@ -1,10 +1,20 @@
-function renderMarkdown(bufferInfo){
-    debugger
-    const content = bufferInfo.content;
-    if(!content) {
-        return false;
+class Markdown {
+    // constructor() {}
+    renderMarkdown(bufferInfo) {
+        debugger;
+        const content = bufferInfo.content;
+        if (!content) {
+            return false;
+        }
+        const md = window.markdownit();
+        const newContent = content.join("\n");
+        if (this.content === newContent) {
+            return;
+        }
+        this.content = newContent;
+        const newHtml = md.render(newContent);
+        const contentElement = document.getElementById('content');
+        contentElement.innerHTML = newHtml;
+        debugger;
     }
-    const md = window.markdownit();
-    const html = md.render(content);
-
 }
