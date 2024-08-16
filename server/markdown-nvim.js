@@ -1,5 +1,6 @@
 import * as child_process from "node:child_process";
 import { attach, findNvim } from "neovim";
+import Browser from "./browser.js";
 
 export default class MarkdownNvim {
     constructor(servername) {
@@ -24,7 +25,7 @@ export default class MarkdownNvim {
     }
 
     setupListeners(ws) {
-        this.connection.on("request", (action, args, resp) => {
+        this.connection.on("request", async (action, args, resp) => {
             debugger;
             if (!action) {
                 return;
@@ -33,9 +34,13 @@ export default class MarkdownNvim {
             if (!bufferId || bufferId <= 0) {
                 return;
             }
-            let browserAction = ["OpenBrowser"];
+            const browserAction = ["OpenBrowser"];
             if (browserAction.includes(action)) {
-                debugger;
+                let browser = await this.connection.getVar("mxmd_browser");
+                browser = browser || 'xdg-open';
+                let url = `http://localhost:1073/page/${bufferId}`
+                // const url = `http://${openHost}:${port}/page/${bufnr}`
+                Browser.open(browser, url);
             }
             resp.send();
         });

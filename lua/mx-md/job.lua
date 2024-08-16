@@ -18,7 +18,7 @@ function M.start()
 	-- 	.. " && ALLOW_CONSOLE=1  node --inspect-brk server/server.js "
 	-- 	.. servername
 	-- 	.. " > ./mxmd.log"
-	-- print("cmd: " .. cmd)
+	print("cmd: " .. cmd)
 	M.job_id = vim.fn.jobstart(cmd, {
 		rpc = true,
 		on_stdout = function(id, data, name)

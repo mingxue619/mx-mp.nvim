@@ -8,7 +8,7 @@ local M = {}
 function M.perview()
     job.start();
 	autocmd.setup_autocmd()
-    M.openBrowser();
+    -- M.openBrowser();
 end
 
 function M.openBrowser()
