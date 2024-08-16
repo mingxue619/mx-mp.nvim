@@ -25,6 +25,11 @@ export default class MarkdownNvim {
 
     setupListeners(ws) {
         this.connection.on("request", (action, args, resp) => {
+            debugger
+            let browserAction = ["OpenBrowser"];
+            if (browserAction.includes(action)) {
+                debugger
+            }
             resp.send();
         });
         this.connection.on("notification", async (action, args) => {
