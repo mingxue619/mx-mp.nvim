@@ -1,8 +1,15 @@
 local M = {}
-
-function M.notify(action, bufnr)
+function M.getChannelId()
 	local success, mxmd_node_channel_id = pcall(vim.api.nvim_get_var, "mxmd_node_channel_id")
 	if not success then
+		return nil
+	end
+    return mxmd_node_channel_id
+end
+
+function M.notify(action, bufnr)
+    local mxmd_node_channel_id = M.getChannelId();
+	if not mxmd_node_channel_id then
 		return
 	end
 	if mxmd_node_channel_id then
@@ -15,8 +22,8 @@ end
 function M.request(action, bufnr)
 	-- print("request")
 	-- print("OpenBrowser.....", action, "---", current_buf)
-	local success, mxmd_node_channel_id = pcall(vim.api.nvim_get_var, "mxmd_node_channel_id")
-	if not success then
+    local mxmd_node_channel_id = M.getChannelId();
+	if not mxmd_node_channel_id then
 		return
 	end
 	if mxmd_node_channel_id then

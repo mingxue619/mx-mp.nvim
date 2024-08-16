@@ -33,6 +33,7 @@ function M.start()
 			print("Node process exited with code " .. code)
 		end,
 	})
+    return M.job_id;
 end
 
 return M

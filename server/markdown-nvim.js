@@ -24,7 +24,7 @@ export default class MarkdownNvim {
             });
     }
 
-    setupListeners(ws) {
+    async setupListeners(ws) {
         this.connection.on("request", async (action, args, resp) => {
             if (!action) {
                 return;
@@ -65,6 +65,7 @@ export default class MarkdownNvim {
             bufferInfo.action = action;
             ws.broadcast(bufferInfo);
         });
+        await this.connection.setVar("mxmd_node_server_status", 1);
     }
     // echo bufnr('%')
     async getBufferById(bufnr) {
