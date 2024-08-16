@@ -4,11 +4,11 @@ function M.getChannelId()
 	if not success then
 		return nil
 	end
-    return mxmd_node_channel_id
+	return mxmd_node_channel_id
 end
 
 function M.notify(action, bufnr)
-    local mxmd_node_channel_id = M.getChannelId();
+	local mxmd_node_channel_id = M.getChannelId()
 	if not mxmd_node_channel_id then
 		return
 	end
@@ -22,15 +22,24 @@ end
 function M.request(action, bufnr)
 	-- print("request")
 	-- print("OpenBrowser.....", action, "---", current_buf)
-    local mxmd_node_channel_id = M.getChannelId();
+	local mxmd_node_channel_id = M.getChannelId()
 	if not mxmd_node_channel_id then
 		return
 	end
 	if mxmd_node_channel_id then
 		-- print("request channel id:", mxmd_node_channel_id)
-		vim.rpcrequest(mxmd_node_channel_id, action, bufnr)
+		local result = vim.rpcrequest(mxmd_node_channel_id, action, bufnr)
+		if not result then
+			return
+		end
+		if type(result) == "userdata" then
+            return
+        end
+		-- vim.notify("result == " .. result)
+		return result
 	else
 		print("Variable not found")
+		return
 	end
 end
 

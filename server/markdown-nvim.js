@@ -33,11 +33,15 @@ export default class MarkdownNvim {
             if (!bufferId || bufferId <= 0) {
                 return;
             }
+            const serverAction = ["ServerStatus"];
             const browserAction = ["OpenBrowser"];
-            if (browserAction.includes(action)) {
+            if (serverAction.includes(action)) {
+                resp.send(1);
+                return;
+            } else if (browserAction.includes(action)) {
                 let browser = await this.connection.getVar("mxmd_browser");
-                browser = browser || 'xdg-open';
-                let url = `http://localhost:1073/page/${bufferId}`
+                browser = browser || "xdg-open";
+                let url = `http://localhost:1073/page/${bufferId}`;
                 // const url = `http://${openHost}:${port}/page/${bufnr}`
                 Browser.open(browser, url);
             }

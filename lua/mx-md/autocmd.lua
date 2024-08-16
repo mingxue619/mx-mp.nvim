@@ -2,6 +2,17 @@ local rpc = require("mx-md.rpc")
 local M = {}
 M.last_call = 0
 
+-- function M.debounce(ms, fn)
+-- 	local timer = vim.loop.new_timer()
+-- 	return function(...)
+-- 		local argv = { ... }
+-- 		timer:start(ms, 0, function()
+-- 			timer:stop()
+-- 			vim.schedule_wrap(fn)(unpack(argv))
+-- 		end)
+-- 	end
+-- end
+
 function M.isPreviewBuffer()
 	local success, mxmd_node_channel_id = pcall(vim.api.nvim_get_var, "mxmd_preview_bufnr")
 	if not success then
