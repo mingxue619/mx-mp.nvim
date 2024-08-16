@@ -14,7 +14,7 @@ end
 function M.openBrowser()
     local action = "OpenBrowser"
 	local current_buf = vim.api.nvim_get_current_buf()
-	rpc.notify(action, current_buf)
+	rpc.request(action, current_buf)
 end
 
 return M

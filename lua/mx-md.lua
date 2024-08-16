@@ -13,6 +13,9 @@ M.setup = function(opt)
 	vim.api.nvim_create_user_command("MXMDPreview", function(res)
         util.perview();
 	end, {})
+	vim.api.nvim_create_user_command("MXMDOpenBrowser", function(res)
+        util.openBrowser();
+	end, {})
 end
 
 return M
