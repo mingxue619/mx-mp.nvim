@@ -94,7 +94,7 @@ export default class MarkdownNvim {
         const pageTitle = await this.connection.getVar("mkdp_page_title");
         const name = await buffer.name;
         // const lines = await buffer.lines;
-        const content = await buffer.getLines();
+        const lines = await buffer.getLines();
         const currentBuffer = await this.connection.buffer;
         const bufferInfo = {
             bufferId: buffer.id,
@@ -104,7 +104,7 @@ export default class MarkdownNvim {
             cursor,
             pageTitle,
             name,
-            content,
+            lines,
         };
         return bufferInfo;
     }
