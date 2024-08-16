@@ -1,4 +1,4 @@
-local job = require("mx-md.job");
+local util = require("mx-md.util");
 local M = {}
 
 -- function M.build(cfg)
@@ -11,7 +11,7 @@ local M = {}
 
 M.setup = function(opt)
 	vim.api.nvim_create_user_command("MXMDPreview", function(res)
-        job.preview();
+        util.perview();
 	end, {})
 end
 

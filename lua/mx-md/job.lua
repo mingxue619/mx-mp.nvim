@@ -2,7 +2,7 @@ local autocmd = require("mx-md.autocmd")
 
 local M = {}
 
-function M.preview()
+function M.start()
 	vim.g.mxmd_preview_bufnr = vim.api.nvim_get_current_buf()
 	local servername = vim.v.servername
 	-- lua print(servername)
@@ -41,7 +41,7 @@ function M.preview()
 	-- rpcrequest(job_id, "nvim_eval")
 	-- print("job_id=" .. M.job_id)
 	-- local response vim.rpcrequest(job_id, 'nvim_eval', '"Hello " . "world!"')
-    print("bufnr = " .. vim.g.mxmd_preview_bufnr)
+    -- print("bufnr = " .. vim.g.mxmd_preview_bufnr)
 end
 
 return M
