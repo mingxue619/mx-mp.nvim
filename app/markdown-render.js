@@ -1,12 +1,4 @@
 class Markdown {
-    escape(str) {
-        // escape html content
-        const d = document.createElement("div");
-        d.appendChild(document.createTextNode(str));
-        return d.innerHTML;
-    }
-
-    // constructor() {}
     renderMarkdown(bufferInfo) {
         const lines = bufferInfo.lines;
         if (!lines) {
@@ -23,14 +15,11 @@ class Markdown {
             highlight: function (str, lang) {
                 if (lang && hljs.getLanguage(lang)) {
                     try {
-                        return `<pre class="hljs"><code>${hljs.highlight(lang, str, true).value}</code></pre>`;
+                        return '<pre><code class="hljs">' + hljs.highlight(str, { language: lang, ignoreIllegals: true }).value + "</code></pre>";
                     } catch (__) {}
                 }
 
-                // escape html content
-                const d = document.createElement("div");
-                d.appendChild(document.createTextNode(str));
-                return `<pre class="hljs"><code>${d.innerHTML}</code></pre>`;
+                return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + "</code></pre>";
             },
         });
         const newContent = lines.join("\n");

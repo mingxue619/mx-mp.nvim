@@ -6,17 +6,20 @@
         <link rel="stylesheet" href="/app/css/app.css" />
         <link rel="stylesheet" href="/app/css/page.css" />
         <link rel="stylesheet" href="/app/css/markdown.css" />
-        <link rel="stylesheet" href="/app/css/highlight.css" />
+        <link rel="stylesheet" href="/app/css/highlight.min.css" />
     </head>
     <body>
-        <main data-theme="dark">
-            <div id="content"></div>
-        </main>
+        <div id="__next">
+            <main data-theme="light">
+                <div id="content"></div>
+            </main>
+        </div>
         <!-- <script src="/node_modules/socket.io/client-dist/socket.io.min.js"></script> -->
         <script src="/node_modules/markdown-it/dist/markdown-it.min.js"></script>
         <script src="/node_modules/markdown-it-sub/dist/markdown-it-sub.min.js"></script>
         <script src="/node_modules/markdown-it-sup/dist/markdown-it-sup.min.js"></script>
         <script src="/node_modules/markdown-it-inject-linenumbers/dist/markdown-it-inject-linenumbers.min.js"></script>
+        <script src="/app/highlight.min.js"></script>
         <script src="/app/markdown-render.js"></script>
         <script src="/app/scroll.js"></script>
         <script src="/app/app.js"></script>
