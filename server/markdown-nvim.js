@@ -26,7 +26,6 @@ export default class MarkdownNvim {
 
     setupListeners(ws) {
         this.connection.on("request", async (action, args, resp) => {
-            debugger;
             if (!action) {
                 return;
             }
