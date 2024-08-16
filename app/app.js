@@ -1,4 +1,5 @@
-let markdown = new Markdown;
+let markdown = new Markdown();
+let cursorScroll = new CursorScroll();
 let bufnr = getBufferNumber();
 if (bufnr) {
     wsConnect(bufnr);
@@ -38,11 +39,11 @@ function wsConnect(bufnr) {
         if (cursorAction.includes(action)) {
         } else if (contentAction.includes(action)) {
             let success = markdown.renderMarkdown(bufferInfo);
-            if(!success) {
+            if (!success) {
                 return;
             }
-            scrollPage(bufferInfo);
         }
+        cursorScroll.scrollTo(bufferInfo);
     };
 
     ws.onclose = function () {
