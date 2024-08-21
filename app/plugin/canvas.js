@@ -25,13 +25,20 @@ window.markdownitCanvas = function(md) {
                             const tag = `<canvas ${Object.entries(attributes)
                                 .map(([k, v]) => `${k}="${v}"`)
                                 .join(" ")}>browser not support canvas</canvas>`;
-                            const script = `<script>window.addEventListener('load', function() {  
-                                                let canvasElement = document.getElementById("${id}");
-                                                if (canvasElement.getContext) {
-                                                    let canvas = canvasElement.getContext("${context}");
-                                                    ${content}
-                                                }
-                                            }); </script>`;
+                            const script = `<script>
+                                                (function() {
+                                                    // debugger;
+                                                    let canvasElement = document.getElementById("${id}");
+                                                    if (canvasElement.getContext) {
+                                                        let canvas = canvasElement.getContext("${context}");
+                                                        canvas.clearRect(0, 0, canvasElement.width, canvasElement.height);
+                                                        ${content}
+                                                    };
+                                                })();
+                                            </script>`;
+                            // const script = `<script> debugger;
+                            //                     let canvasElement = document.getElementById("${id}");
+                            //                 </script>`;
                             const html = tag + script;
                             return html;
                         }
