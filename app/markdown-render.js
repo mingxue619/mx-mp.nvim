@@ -1,5 +1,6 @@
 class Markdown {
     renderMarkdown(bufferInfo) {
+
         const lines = bufferInfo.lines;
         if (!lines) {
             return false;
@@ -22,14 +23,15 @@ class Markdown {
                 return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + "</code></pre>";
             },
         });
-        console.log(Object.keys(md.renderer.rules));
         const newContent = lines.join("\n");
         if (this.content === newContent) {
             return;
         }
         this.lines = lines;
         this.content = newContent;
-        const newHtml = md.use(window.markdownitSub).use(window.markdownitSup).use(window.markdownitInjectLinenumbers).render(newContent);
+       
+        const newHtml = md.use(window.markdownitCanvas).use(window.markdownitSub).use(window.markdownitSup).use(window.markdownitInjectLinenumbers).render(newContent);
+        console.log(Object.keys(md.renderer.rules));
         const contentElement = document.getElementById("content");
         contentElement.innerHTML = newHtml;
         let scripts = contentElement.getElementsByTagName("script");
