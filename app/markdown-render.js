@@ -22,6 +22,7 @@ class Markdown {
                 return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + "</code></pre>";
             },
         });
+        console.log(Object.keys(md.renderer.rules));
         const newContent = lines.join("\n");
         if (this.content === newContent) {
             return;
@@ -31,5 +32,14 @@ class Markdown {
         const newHtml = md.use(window.markdownitSub).use(window.markdownitSup).use(window.markdownitInjectLinenumbers).render(newContent);
         const contentElement = document.getElementById("content");
         contentElement.innerHTML = newHtml;
+        let scripts = contentElement.getElementsByTagName("script");
+        Array.from(scripts).forEach(function (script) {
+            var scriptElement = document.createElement("script");
+            scriptElement.textContent = script.textContent || script.innerText || "";
+            document.body.appendChild(scriptElement);
+            // setTimeout(function () {
+            //     document.body.removeChild(newScript);
+            // }, 0);
+        });
     }
 }
