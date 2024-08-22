@@ -36,4 +36,18 @@ function M.start()
     return M.job_id;
 end
 
+function M.stop(job_id)
+    if not job_id then
+        job_id = M.job_id;
+    end
+    if not job_id then
+        return
+    end
+    vim.fn.jobstop(job_id);
+end
+function M.restart() 
+    M.stop();
+    return M.start();
+end
+
 return M
