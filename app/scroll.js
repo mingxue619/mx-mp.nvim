@@ -1,6 +1,5 @@
 class CursorScroll {
     scrollTo(bufferInfo) {
-        // debugger;
         const cursor = bufferInfo.cursor;
         const winline = bufferInfo.winline;
         const winheight = bufferInfo.winheight;
