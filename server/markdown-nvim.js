@@ -17,7 +17,7 @@ export default class MarkdownNvim {
         this.connection.channelId
             .then(async (channelId) => {
                 console.log("channelId: " + channelId);
-                await this.connection.setVar("mxmd_node_channel_id", channelId);
+                await this.connection.setVar("mxmp_node_channel_id", channelId);
             })
             .catch((e) => {
                 console.log("error channelId: ", e);
@@ -39,7 +39,7 @@ export default class MarkdownNvim {
                 resp.send(1);
                 return;
             } else if (browserAction.includes(action)) {
-                let browser = await this.connection.getVar("mxmd_browser");
+                let browser = await this.connection.getVar("mxmp_browser");
                 browser = browser || "xdg-open";
                 let url = `http://localhost:1073/page/${bufferId}`;
                 // const url = `http://${openHost}:${port}/page/${bufnr}`
@@ -69,7 +69,7 @@ export default class MarkdownNvim {
             bufferInfo.action = action;
             ws.broadcast(bufferInfo);
         });
-        await this.connection.setVar("mxmd_node_server_status", 1);
+        await this.connection.setVar("mxmp_node_server_status", 1);
     }
     // echo bufnr('%')
     async getBufferById(bufnr) {

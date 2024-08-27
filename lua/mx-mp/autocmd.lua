@@ -1,4 +1,4 @@
-local rpc = require("mx-md.rpc")
+local rpc = require("mx-mp.rpc")
 local M = {}
 M.last_call = 0
 
@@ -14,12 +14,12 @@ M.last_call = 0
 -- end
 
 function M.isPreviewBuffer()
-	local success, mxmd_node_channel_id = pcall(vim.api.nvim_get_var, "mxmd_preview_bufnr")
+	local success, mxmp_node_channel_id = pcall(vim.api.nvim_get_var, "mxmp_preview_bufnr")
 	if not success then
 		return false
 	end
 	local current_buf = vim.api.nvim_get_current_buf()
-	return current_buf == mxmd_node_channel_id
+	return current_buf == mxmp_node_channel_id
 end
 
 function M.cursorTimeAllow()

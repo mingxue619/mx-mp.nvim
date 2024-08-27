@@ -2,7 +2,7 @@ import PageWebSocket from "./page-websocket.js";
 import MarkdownNvim from "./markdown-nvim.js";
 import HttpServer from "./http-server.js";
 
-const PORT = 1073;
+const PORT = 1070;
 const servername = process.argv[2];
 
 // import { attach } from "neovim";

@@ -1,18 +1,18 @@
-local util = require("mx-md.util")
+local util = require("mx-mp.util")
 local M = {}
 
 M.setupOption = function(opt)
 	local browser = opt.browser
-	vim.g.mxmd_browser = browser
+	vim.g.mxmp_browser = browser
 end
 M.setupCommand = function(opt)
-	vim.api.nvim_create_user_command("MXMDPreview", function(res)
+	vim.api.nvim_create_user_command("MXMPPreview", function(res)
 		util.perview()
 	end, {})
-	vim.api.nvim_create_user_command("MXMDOpenBrowser", function(res)
+	vim.api.nvim_create_user_command("MXMPOpenBrowser", function(res)
 		util.openBrowser()
 	end, {})
-	vim.api.nvim_create_user_command("MXMDRestart", function(res)
+	vim.api.nvim_create_user_command("MXMPRestart", function(res)
 		util.restart()
 	end, {})
 end

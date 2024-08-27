@@ -1,7 +1,7 @@
 local M = {}
 
 function M.start()
-	vim.g.mxmd_preview_bufnr = vim.api.nvim_get_current_buf()
+	vim.g.mxmp_preview_bufnr = vim.api.nvim_get_current_buf()
 	local servername = vim.v.servername
 	-- lua print(servername)
 	-- local pid = vim.fn.getpid()
@@ -12,12 +12,12 @@ function M.start()
 		.. project_dir
 		.. " && ALLOW_CONSOLE=1  node --inspect server/server.js "
 		.. servername
-		.. " > ./mxmd.log"
+		.. " > ./mxmp.log"
 	-- local cmd = "cd "
 	-- 	.. project_dir
 	-- 	.. " && ALLOW_CONSOLE=1  node --inspect-brk server/server.js "
 	-- 	.. servername
-	-- 	.. " > ./mxmd.log"
+	-- 	.. " > ./mxmp.log"
 	-- print("cmd: " .. cmd)
 	M.job_id = vim.fn.jobstart(cmd, {
 		rpc = true,
@@ -25,11 +25,11 @@ function M.start()
 			print("stdout: " .. table.concat(data, "\n"))
 		end,
 		on_stderr = function(id, data, name)
-			-- vim.g.mxmd_preview_bufnr = nil
+			-- vim.g.mxmp_preview_bufnr = nil
 			print("stderr: " .. table.concat(data, "\n"))
 		end,
 		on_exit = function(id, code, event)
-			vim.g.mxmd_preview_bufnr = nil
+			vim.g.mxmp_preview_bufnr = nil
 			print("Node process exited with code " .. code)
 		end,
 	})
