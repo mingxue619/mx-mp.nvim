@@ -74,9 +74,16 @@ export default class MarkdownNvim {
         });
         await this.connection.setVar("mxmp_node_server_status", 1);
     }
-    async getHtmlInfo(bufnr) {
-        const htmlInfo = this.render.renderMarkdown(bufferInfo);
-        return htmlInfo;
+    async getPort() {
+        try {
+            const port = await this.connection.executeLua("return require('mx-mp.service').getPort()");
+            if (port) {
+                return port;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+        return 1070;
     }
     // echo bufnr('%')
     async getBufferById(bufnr) {
@@ -136,15 +143,9 @@ export default class MarkdownNvim {
         };
         return bufferInfo;
     }
-    async getPort() {
-        try {
-            const port = await this.connection.executeLua("return require('mx-mp.service').getPort()");
-            if (port) {
-                return port;
-            }
-        } catch (e) {
-            console.log(e);
-        }
-        return 1070;
+    async getHtmlInfo(bufnr) {
+        let bufferInfo = await this.getBufferInfo(bufnr);
+        const htmlInfo = this.render.renderMarkdown(bufferInfo);
+        return htmlInfo;
     }
 }

@@ -8,7 +8,7 @@ export default class MarkdownRender {
 
     renderMarkdown(bufferInfo) {
         debugger
-        const { html, css } = marp.render("# Hello, marp-core!");
+        const { html, css } = this.marp.render("# Hello, marp-core!");
         bufferInfo.html = html;
         bufferInfo.css = css;
         return bufferInfo;

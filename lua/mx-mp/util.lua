@@ -23,6 +23,10 @@ function M.stop()
     job.stop();
 end
 
+function M.restart()
+    job.restart();
+end
+
 function M.openBrowser()
 	local timer = vim.loop.new_timer()
 	local sleep = 1000

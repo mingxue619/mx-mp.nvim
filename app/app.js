@@ -1,4 +1,4 @@
-let markdown = new Markdown();
+let render = new Render();
 let cursorScroll = new CursorScroll();
 let bufnr = getBufferNumber();
 if (bufnr) {
@@ -38,7 +38,7 @@ function wsConnect(bufnr) {
         let contentAction = ["Init", "CursorHold", "BufWrite", "InsertLeave"];
         if (cursorAction.includes(action)) {
         } else if (contentAction.includes(action)) {
-            let success = markdown.renderMarkdown(bufferInfo);
+            let success = render.render(bufferInfo);
             if (!success) {
                 return;
             }
