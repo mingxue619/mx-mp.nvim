@@ -16,7 +16,7 @@ end
 function M.perview()
 	local job_id = job.restart()
 	autocmd.setup_autocmd()
-	M.openBrowser()
+	-- M.openBrowser()
 end
 
 function M.stop()
@@ -41,6 +41,10 @@ function M.openBrowser()
 			timer:close()
 		end)
 	)
+end
+
+function M.getPort()
+    return 1070;
 end
 
 return M

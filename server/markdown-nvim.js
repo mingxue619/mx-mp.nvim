@@ -129,4 +129,10 @@ export default class MarkdownNvim {
         };
         return bufferInfo;
     }
+    async getPort() {
+        debugger;
+        const port = await this.connection.executeLua("return require('mx-mp.service').getPort()");
+        debugger
+        return port;
+    }
 }

@@ -17,6 +17,8 @@ const mdn = new MarkdownNvim(servername);
 pws.setupListeners(mdn);
 mdn.setupListeners(pws);
 
+let port = await mdn.getPort()
+debugger
 httpServer.listen(PORT, async () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
