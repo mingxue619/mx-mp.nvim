@@ -16,10 +16,10 @@ export default class PageWebSocket {
                 let action = data.action;
                 if (action === "Init") {
                     let bufnr = data.bufnr;
-                    let bufferInfo = await mdn.getBufferInfo(bufnr);
-                    bufferInfo.action = action;
-                    let bufferInfoStr = JSON.stringify(bufferInfo);
-                    ws.send(bufferInfoStr);
+                    let info = await mdn.getHtmlInfo(bufnr);
+                    info.action = action;
+                    let infoStr = JSON.stringify(info);
+                    ws.send(infoStr);
                 }
             });
 

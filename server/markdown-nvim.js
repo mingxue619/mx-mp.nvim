@@ -1,6 +1,7 @@
 import * as child_process from "node:child_process";
 import { attach, findNvim } from "neovim";
 import Browser from "./browser.js";
+import MarkdownRender from "./markdown-render.js";
 
 export default class MarkdownNvim {
     constructor(servername) {
@@ -9,6 +10,7 @@ export default class MarkdownNvim {
                 socket: servername,
             });
             // this.connection.command("vsp");
+            this.render = new MarkdownRender();
         } else {
             const found = findNvim({ orderBy: "desc", minVersion: "0.9.0" });
             const nvim_proc = child_process.spawn(found.matches[0].path, ["--clean", "--embed"], {});
@@ -72,6 +74,10 @@ export default class MarkdownNvim {
         });
         await this.connection.setVar("mxmp_node_server_status", 1);
     }
+    async getHtmlInfo(bufnr) {
+        const htmlInfo = this.render.renderMarkdown(bufferInfo);
+        return htmlInfo;
+    }
     // echo bufnr('%')
     async getBufferById(bufnr) {
         const buffers = await this.connection.buffers;
@@ -92,7 +98,7 @@ export default class MarkdownNvim {
         const pageTitle = await this.connection.getVar("mkdp_page_title");
         const name = await buffer.name;
         const currentBuffer = await this.connection.buffer;
-        const bufferInfo = {
+        let bufferInfo = {
             bufferId: buffer.id,
             currentBufferId: currentBuffer.id,
             winline,
@@ -131,10 +137,14 @@ export default class MarkdownNvim {
         return bufferInfo;
     }
     async getPort() {
-        const port = await this.connection.executeLua("return require('mx-mp.service').getPort()");
-        if (!port) {
-            return 1070;
+        try {
+            const port = await this.connection.executeLua("return require('mx-mp.service').getPort()");
+            if (port) {
+                return port;
+            }
+        } catch (e) {
+            console.log(e);
         }
-        return port;
+        return 1070;
     }
 }
