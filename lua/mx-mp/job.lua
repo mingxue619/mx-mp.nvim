@@ -8,31 +8,27 @@ function M.start()
 	local script_path = debug.getinfo(1, "S").source:sub(2)
 	-- local script_path = vim.fn.expand("<sfile>:p")
 	local project_dir = script_path:match("(.*/).-/"):match("(.*/).-/")
-	-- local cmd = "cd "
-	-- 	.. project_dir
-	-- 	.. " && ALLOW_CONSOLE=1  node --inspect server/server.js "
-	-- 	.. servername
-	-- 	.. " > ./mxmp.log"
 	local cmd = "cd "
 		.. project_dir
-		.. " && ALLOW_CONSOLE=1  node --inspect-brk server/server.js "
+		.. " && ALLOW_CONSOLE=1  node --inspect server/server.js "
+		-- .. " && ALLOW_CONSOLE=1  node --inspect-brk server/server.js "
 		.. servername
 		.. " > ./mxmp.log"
-	print("cmd: " .. cmd)
-	-- M.job_id = vim.fn.jobstart(cmd, {
-	-- 	rpc = true,
-	-- 	on_stdout = function(id, data, name)
-	-- 		print("stdout: " .. table.concat(data, "\n"))
-	-- 	end,
-	-- 	on_stderr = function(id, data, name)
-	-- 		-- vim.g.mxmp_preview_bufnr = nil
-	-- 		print("stderr: " .. table.concat(data, "\n"))
-	-- 	end,
-	-- 	on_exit = function(id, code, event)
-	-- 		vim.g.mxmp_preview_bufnr = nil
-	-- 		print("Node process exited with code " .. code)
-	-- 	end,
-	-- })
+	-- print("cmd: " .. cmd)
+	M.job_id = vim.fn.jobstart(cmd, {
+		rpc = true,
+		on_stdout = function(id, data, name)
+			print("stdout: " .. table.concat(data, "\n"))
+		end,
+		on_stderr = function(id, data, name)
+			-- vim.g.mxmp_preview_bufnr = nil
+			print("stderr: " .. table.concat(data, "\n"))
+		end,
+		on_exit = function(id, code, event)
+			vim.g.mxmp_preview_bufnr = nil
+			print("Node process exited with code " .. code)
+		end,
+	})
     return M.job_id;
 end
 

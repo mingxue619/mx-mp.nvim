@@ -39,9 +39,10 @@ export default class MarkdownNvim {
                 resp.send(1);
                 return;
             } else if (browserAction.includes(action)) {
+                let port = await this.getPort();
                 let browser = await this.connection.getVar("mxmp_browser");
                 browser = browser || "xdg-open";
-                let url = `http://localhost:1073/page/${bufferId}`;
+                let url = `http://localhost:${port}/page/${bufferId}`;
                 // const url = `http://${openHost}:${port}/page/${bufnr}`
                 Browser.open(browser, url);
             }
@@ -130,9 +131,10 @@ export default class MarkdownNvim {
         return bufferInfo;
     }
     async getPort() {
-        debugger;
         const port = await this.connection.executeLua("return require('mx-mp.service').getPort()");
-        debugger
+        if (!port) {
+            return 1070;
+        }
         return port;
     }
 }

@@ -2,7 +2,6 @@ import PageWebSocket from "./page-websocket.js";
 import MarkdownNvim from "./markdown-nvim.js";
 import HttpServer from "./http-server.js";
 
-const PORT = 1070;
 const servername = process.argv[2];
 
 // import { attach } from "neovim";
@@ -18,7 +17,6 @@ pws.setupListeners(mdn);
 mdn.setupListeners(pws);
 
 let port = await mdn.getPort()
-debugger
-httpServer.listen(PORT, async () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+httpServer.listen(port, async () => {
+    console.log(`Server is running on http://localhost:${port}`);
 });

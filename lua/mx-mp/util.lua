@@ -16,7 +16,7 @@ end
 function M.perview()
 	local job_id = job.restart()
 	autocmd.setup_autocmd()
-	-- M.openBrowser()
+	M.openBrowser()
 end
 
 function M.stop()

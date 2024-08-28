@@ -2,8 +2,8 @@ local util = require("mx-mp.util")
 local M = {}
 
 M.setupOption = function(opt)
-	local browser = opt.browser
-	vim.g.mxmp_browser = browser
+	vim.g.mxmp_port = opt.port;
+	vim.g.mxmp_browser = opt.browser;
 end
 M.setupCommand = function(opt)
 	vim.api.nvim_create_user_command("MXMPPreview", function(res)
