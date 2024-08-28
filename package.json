@@ -16,6 +16,7 @@
   "dependencies": {
     "@chemzqm/neovim": "^6.1.2",
     "@marp-team/marp-core": "^3.9.0",
+    "@marp-team/marpit": "^3.0.0",
     "@types/node": "^20.14.9",
     "@types/ws": "^8.5.12",
     "markdown-it": "^14.1.0",
