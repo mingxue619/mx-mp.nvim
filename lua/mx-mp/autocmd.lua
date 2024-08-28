@@ -41,6 +41,7 @@ function M.contentTimeAllow()
 end
 
 function M.onCursorMoved(action)
+	-- print("onCursorMoved, action = :", action)
 	if not M.isPreviewBuffer() then
 		return
 	end

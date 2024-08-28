@@ -1,6 +1,6 @@
 local job = require("mx-mp.job")
 local rpc = require("mx-mp.rpc")
-local autocmd = require("mx-md.autocmd")
+local autocmd = require("mx-mp.autocmd")
 
 local M = {}
 
