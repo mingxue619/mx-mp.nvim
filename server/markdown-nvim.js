@@ -58,19 +58,19 @@ export default class MarkdownNvim {
             if (!bufferId || bufferId <= 0) {
                 return;
             }
-            let bufferInfo = {};
+            let info = {};
             let cursorAction = ["CursorMoved", "CursorMovedI"];
             let contentAction = ["CursorHold", "BufWrite", "InsertLeave"];
             if (cursorAction.includes(action)) {
-                bufferInfo = await this.getCursorInfo(bufferId);
+                info = await this.getCursorInfo(bufferId);
             } else if (contentAction.includes(action)) {
-                bufferInfo = await this.getBufferInfo(bufferId);
+                info = await this.getHtmlInfo(bufferId);
             }
-            if (!bufferInfo) {
-                bufferInfo = {};
+            if (!info) {
+                info = {};
             }
-            bufferInfo.action = action;
-            ws.broadcast(bufferInfo);
+            info.action = action;
+            ws.broadcast(info);
         });
         await this.connection.setVar("mxmp_node_server_status", 1);
     }
@@ -106,6 +106,7 @@ export default class MarkdownNvim {
         const name = await buffer.name;
         const currentBuffer = await this.connection.buffer;
         let bufferInfo = {
+            type: "cursor",
             bufferId: buffer.id,
             currentBufferId: currentBuffer.id,
             winline,
@@ -132,6 +133,7 @@ export default class MarkdownNvim {
         const lines = await buffer.getLines();
         const currentBuffer = await this.connection.buffer;
         const bufferInfo = {
+            type: "markdown",
             bufferId: buffer.id,
             currentBufferId: currentBuffer.id,
             winline,
@@ -146,6 +148,7 @@ export default class MarkdownNvim {
     async getHtmlInfo(bufnr) {
         let bufferInfo = await this.getBufferInfo(bufnr);
         const htmlInfo = this.render.renderMarkdown(bufferInfo);
+        htmlInfo.type = "html";
         return htmlInfo;
     }
 }

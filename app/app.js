@@ -30,20 +30,21 @@ function wsConnect(bufnr) {
     };
 
     ws.onmessage = function (event) {
+        debugger
         // console.log(`Received from server: ${event.data}`);
         let data = event.data;
-        let bufferInfo = JSON.parse(data);
-        let action = bufferInfo.action;
+        let info = JSON.parse(data);
+        let action = info.action;
         let cursorAction = ["CursorMoved", "CursorMovedI"];
         let contentAction = ["Init", "CursorHold", "BufWrite", "InsertLeave"];
         if (cursorAction.includes(action)) {
         } else if (contentAction.includes(action)) {
-            let success = render.render(bufferInfo);
+            let success = render.render(info);
             if (!success) {
                 return;
             }
         }
-        cursorScroll.scrollTo(bufferInfo);
+        cursorScroll.scrollTo(info);
     };
 
     ws.onclose = function () {

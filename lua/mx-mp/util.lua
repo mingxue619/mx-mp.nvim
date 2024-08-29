@@ -25,6 +25,7 @@ end
 
 function M.restart()
     job.restart();
+	autocmd.setup_autocmd()
 end
 
 function M.openBrowser()

@@ -53,6 +53,7 @@ function M.onCursorMoved(action)
 end
 
 function M.onContentRefresh(action)
+	-- print("onContentRefresh, action = :", action)
 	if not M.isPreviewBuffer() then
 		return
 	end
