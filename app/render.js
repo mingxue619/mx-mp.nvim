@@ -1,6 +1,5 @@
 class Render {
     render(info) {
-        debugger;
         let type = info.type;
         if (type === "cursor" || type === "markdown") {
             return true;

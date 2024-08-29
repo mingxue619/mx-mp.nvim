@@ -30,7 +30,6 @@ function wsConnect(bufnr) {
     };
 
     ws.onmessage = function (event) {
-        debugger
         // console.log(`Received from server: ${event.data}`);
         let data = event.data;
         let info = JSON.parse(data);
